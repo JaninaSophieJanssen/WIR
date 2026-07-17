@@ -1,0 +1,49 @@
+_type: prompt
+input_variables:
+- name
+- number_of_topics
+
+template: 'Objective:
+  Based on the methodology described in the research paper "Developing a Test Collection for the Evaluation of Integrated Search" by Lykke et al. (ECIR 2010), you are to generate a set of realistic, task-based information needs for an IR test collection.
+  
+  Your Persona:
+  You are, {name}, a research scientist. You will be given a list of your own publications. You must adopt this persona completely, writing in the first person ("I", "my project", "we are investigating") and grounding the information needs in your established research interests and expertise as evidenced by your publications.
+  
+  Task:
+  Based on the provided list of your publications, create 10 new topic descriptions. These topics must represent plausible, real-world information needs you might have as you continue your research. Imagine scenarios like starting a new project, exploring a tangent from your previous work, preparing a lecture or review paper, or learning a new experimental or computational technique that is relevant to your field.
+  
+  Output Format and Structure:
+  You must generate the output in a single, valid XML block. Do not include any text, commentary, or explanations before or after the main XML content. The format must strictly adhere to the following structure for each of the 10 topics.
+  <topic>
+    <topic_id>XXX</topic_id>
+    <author_id>YYY</author_id>
+    <current_information_need>
+      [Your text here]
+    </current_information_need>
+    <work_task>
+      [Your text here]
+    </work_task>
+    <background_knowledge>
+      [Your text here]
+    </background_knowledge>
+    <ideal_answer>
+      [Your text here]
+    </ideal_answer>
+    <search_terms>
+      [Your text here]
+    </search_terms>
+  </topic>
+
+  Content Guidelines for XML Tags:
+  <topic>: The root element for a single information need. Generate 10 of these.
+  <topic_id>: Use unique, sequential three-digit integers for each topic, starting from 067 and ending with 076.
+  <author_id>: Use the placeholder ID 124 for all 10 topics.
+  <current_information_need>: A concise, one-sentence statement of your information need, written in the first person. Example: "I am looking for information about the fabrication of field effect transistors on silicon-on-insulator wafers."
+
+  <work_task>: A detailed, first-person paragraph explaining the underlying research task or project that motivates the search. Explain why you need this information. Connect it to your past work (from the publications) and describe the new research direction. Example: "In my masters project, I am trying to fabricate and test field effect transistors on SOI wafers. This builds on my previous work with nanolithography, but I need to adapt the techniques for SOI substrates, which present unique challenges for device performance and yield."
+  
+  <background_knowledge>: A paragraph describing what you already know about the specific topic of the search. As an expert, you have deep knowledge in your core area, but you might be new to a specific technique, a different material system, or a related theoretical model. Be realistic about the gaps in your knowledge. Example: "I have a Ph.D. in nanotechnology and extensive experience with fabrication techniques on the nano-scale, including e-beam lithography and reactive ion etching (RIE). However, I have never worked with SOI wafers specifically and am unfamiliar with their unique processing requirements."
+  
+  <ideal_answer>: A description of what the perfect search results would contain. Be specific. Mention document types (e.g., review articles, experimental papers, tutorials, data sheets) and the specific content you hope to find (e.g., graphs comparing different methods, tables of process parameters, detailed fabrication steps, sample source code, theoretical derivations). Example: "The ideal answer would be a review article on SOI FET fabrication, or several research papers containing detailed information about fabrication steps, process flows, and characterization results, including mobility and threshold voltage data."
+  
+  <search_terms>: A list of 3-5 keywords or short phrases you would use for the search. Separate the terms with a semicolon. Example: "Fabrication of SOI field effect transistors; Production of SOI field effect transistors; Design of SOI field effect transistors; Silicon-on-insulator field effect transistors; SOI FETs'
