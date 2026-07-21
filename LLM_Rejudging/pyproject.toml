@@ -1,0 +1,70 @@
+[project]
+authors = [
+  {name = "Jüri Keller", email = "jueri.keller@th-koeln.de"},
+]
+dependencies = [
+  "langchain>=1.1.2",
+  "python-dotenv>=0.9.9",
+  "tqdm>=4.67.1",
+  "langchain-core>=1.1.1",
+  "pydantic>=2.12.5",
+  "click>=8.0.0",
+]
+description = "Topic generation"
+name = "topic-gen"
+readme = "README.md"
+requires-python = ">=3.11"
+version = "0.1.0"
+
+[project.scripts]
+topic-gen = "topic_gen.__main__:main_cli"
+
+[project.optional-dependencies]
+evaluate = [
+  "ir-measures>=0.4.3",
+  "bert-score>=0.3.13",
+  "krippendorff>=0.8.2",
+  "statsmodels>=0.14.5",
+  "evaluate>=0.4.6",
+  "scipy>=1.16.3",
+  "sentence-transformers>=5.1.2",
+]
+
+[tool.pytest.ini_options]
+markers = [
+  "integration: requires a live LLM (skipped by default; pass --integration to run)",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=9.0.1",
+  "ruff>=0.9.0",
+  "mypy>=1.14.0",
+  "pandas>=2.0.0",
+  "langchain-google-genai>=2.0.0",
+  "langchain-openai>=0.3.0",
+]
+
+[tool.mypy]
+python_version = "3.11"
+
+[[tool.mypy.overrides]]
+ignore_errors = true
+module = "topic_gen.evaluate.*"
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = [
+  "ir_measures.*",
+  "ir_datasets.*",
+  "krippendorff.*",
+  "statsmodels.*",
+  "sentence_transformers.*",
+]
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["topic_gen"]
