@@ -27,19 +27,20 @@ def _(pd):
 @app.cell
 def _(pd):
     def update_jud_column(df1, df2):
-        #code fixed with help of mistral 
+        df1 = df1.copy()          # <-- work on an independent copy
+        df2 = df2.copy()          # <-- also avoid mutating translated_and_judged/llm_judged
 
         df1["qid"] = df1["qid"].astype('str')
         df1["docid"] = df1["docid"].astype('int')
         df1["jugement"] = df1["jugement"].astype('int')
+
         df2["qid"] = df2["qid"].astype('str')
         df2["docid"] = df2["docid"].astype('int')
 
-        for col in ["maryam_relevance", "relevance", "relevance "]:
+        for col in ["maryam_relevance", "new relevance", "new relevance "]:
             if col in df2.columns:
                 df2[col] = pd.to_numeric(df2[col], errors='coerce').astype('Int64')
 
-        # Merge df1 and df2 on "id" and "doc" to find matches
         merged = pd.merge(df1, df2, on=["qid", "docid"], how="left")
 
         merged["jud_update"] = merged.apply(
@@ -50,7 +51,6 @@ def _(pd):
             axis=1
         )
 
-        # Update the "jud" column in df1 where there is a match
         df1.loc[merged["jud_update"].notna(), "jugement"] = merged.loc[merged["jud_update"].notna(), "jud_update"]
 
         return df1
@@ -62,13 +62,11 @@ def _(pd):
 def _(pd):
     def create_human_judgments(df2):
 
-    
+
         df = pd.DataFrame()
         df["qid"] = df2["qid"]
-        df["docid"] = df2["docid"]
-
-        # Add the 'zero' column filled with 0
         df["zero"] = 0
+        df["docid"] = df2["docid"]
 
         df["jugement"] = df2.apply(
             lambda row: row.get("maryam_relevance") if pd.notna(row.get("maryam_relevance"))
@@ -102,11 +100,6 @@ def _(qrel_human_judgments, qrel_llm_judgments, qrel_rejudged_human):
     qrel_rejudged_human.to_csv("qrel_rejudged_human.txt", sep=' ', index=False, na_rep='NaN')
     qrel_human_judgments.to_csv("qrel_human.txt", sep=' ', index=False, na_rep='NaN')
     qrel_llm_judgments.to_csv("qrel_llm.txt", sep=' ', index=False, na_rep='NaN')
-    return
-
-
-@app.cell
-def _():
     return
 
 
