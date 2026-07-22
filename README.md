@@ -17,3 +17,4 @@ This is due to us wanting the steps to be clearly seperated, for easier reuse of
 
 ### Run Evaluation based of different Qrels
 Run_Qrel_Compare has the script for the Run and Qrel comparision. The baseline runs need to be unzipped inside the folder before running code for everything to work as well as have the zipped version still in the folder. While the evaluation will work with just the zipped folders, the script also compares the qrels to the runs, for which unzipped txt files where used. 
+For the Evaluation we used Ranx (https://amenra.github.io/ranx/) which filters out any Questions not in the runs. 
